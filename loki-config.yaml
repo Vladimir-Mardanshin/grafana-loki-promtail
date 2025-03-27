@@ -2,9 +2,11 @@ auth_enabled: false
 
 server:
   http_listen_port: 3100
-  grpc_listen_port: 9095
 
 ingester:
+  wal:
+    enabled: true
+    dir: /wal
   lifecycler:
     ring:
       kvstore:
@@ -33,8 +35,11 @@ storage_config:
   filesystem:
     directory: /loki/chunks
 
+compactor:
+  working_directory: /compactor
+  shared_store: filesystem
+
 limits_config:
-  enforce_metric_name: false
   reject_old_samples: true
   reject_old_samples_max_age: 168h
 
